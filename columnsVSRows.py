@@ -60,6 +60,34 @@ def checkScheduleConstraintsColumns(schedule, nrTeams):
 
     return violations
 
+def createRandomScheduleColumns(nrTeams):
+    """Generates a randomly unpaired columnsFirst schedule
+
+    Arguments:
+        nrTeams (int) : The number of teams present in the schedule
+
+    Returns:
+        Schedule ([int, int]) : The randomly generated schedule generated
+    """
+        
+    nrRounds = (2*nrTeams)-2
+    schedule = np.full((nrRounds, nrTeams), None)
+    choices = list(range(-nrTeams, nrTeams+1))
+    choices.remove(0)
+
+    for team in range(nrTeams):
+        team += 1
+        teamsToPick = copy.deepcopy(choices)
+        teamsToPick.remove(team)
+        teamsToPick.remove(-team)
+        for round in range(nrRounds):
+            choice = random.choice(teamsToPick)
+            teamsToPick.remove(choice)
+
+            schedule[round, team-1] = choice
+
+    return schedule
+
 def checkScheduleConstraintsRows(schedule, nrTeams):
     """Calculates the number of violations present in the rowsFirst schedule
 
@@ -120,34 +148,6 @@ def checkScheduleConstraintsRows(schedule, nrTeams):
         violations[2] += len(gamesNeeded)
 
     return  violations
-
-def createRandomScheduleColumns(nrTeams):
-    """Generates a randomly unpaired columnsFirst schedule
-
-    Arguments:
-        nrTeams (int) : The number of teams present in the schedule
-
-    Returns:
-        Schedule ([int, int]) : The randomly generated schedule generated
-    """
-        
-    nrRounds = (2*nrTeams)-2
-    schedule = np.full((nrRounds, nrTeams), None)
-    choices = list(range(-nrTeams, nrTeams+1))
-    choices.remove(0)
-
-    for team in range(nrTeams):
-        team += 1
-        teamsToPick = copy.deepcopy(choices)
-        teamsToPick.remove(team)
-        teamsToPick.remove(-team)
-        for round in range(nrRounds):
-            choice = random.choice(teamsToPick)
-            teamsToPick.remove(choice)
-
-            schedule[round, team-1] = choice
-
-    return schedule
 
 def createRandomScheduleRows(nrTeams):
     """Generates a randomly paired rowsFirst schedule
