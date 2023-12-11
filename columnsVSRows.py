@@ -17,7 +17,7 @@ def checkScheduleConstraintsColumns(schedule, nrTeams):
         nrTeams (int) : The number of teams present in the schedule
 
     Returns:
-        violations ([int]) : The number of violations present in the schedule, in the format [Home/Away streak, No-repeat, Double round-robin, mismatched games, games against itself]
+        violations ([int]) : The number of violations present in the schedule, in the format [maxStreak, No-repeat, Double round-robin]
     """
     nrRounds = (2*nrTeams)-2
     violations = [0, 0, 0, 0, 0]
@@ -69,7 +69,7 @@ def checkScheduleConstraintsRows(schedule, nrTeams):
         nrTeams (int) : The number of teams present in the schedule
 
     Returns:
-        violations ([int]) : The number of violations present in the schedule, in the format [Home/Away streak, No-repeat, Double round-robin, mismatched games, games against itself]
+        violations ([int]) : The number of violations present in the schedule, in the format [maxStreak, No-repeat, Double round-robin]
     """
 
     nrRounds = (2*nrTeams)-2
